@@ -12,6 +12,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     public event Action OnShootingFireEvent;
     public event Action OnStopFireEvent;
 
+    public Vector3 MovementVector { get; private set; }
     public Vector2 AimPosition { get; private set; }
     private Controls _playerInputAction; 
 
@@ -28,8 +29,9 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     public void OnMovement(InputAction.CallbackContext context)
     {
-        Vector2 value = context.ReadValue<Vector2>();
-        MovementEvent?.Invoke(value);
+        MovementVector = context.ReadValue<Vector3>();
+        //Vector3 value = context.ReadValue<Vector3>();
+        //MovementEvent?.Invoke(value);
     }
 
     public void OnAim(InputAction.CallbackContext context)
