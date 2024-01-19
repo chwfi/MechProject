@@ -1,37 +1,98 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
+    [Range(0.1f, 1f)][SerializeField] private float _rotateSpeed;
+
     [SerializeField] private InputReader _inputReader;
+    public InputReader InputReader => _inputReader;
 
-    #region Components
-    private CharacterController _characterController;
-    public CharacterController CharControllerCompo => _characterController;
-    private Animator _animator;
-    public Animator AnimatorCompo => _animator;
-    #endregion
+    private Transform _visualTrm;
 
-    private Vector3 _movementVelocity;
-    public Vector3 MovementVelocity => _movementVelocity;
-    private float _verticalVelocity;
-
-    private void Awake()
+    public override void Awake()
     {
-        Transform visualTrm = transform.Find("Visual").transform;
-        _animator = visualTrm.GetComponent<Animator>();
-        _characterController = GetComponent<CharacterController>();
+        _stateMachine = new StateMachine();
+        RegisterStates();
+        CurrentHP = _maxHP;
+
+        _visualTrm = transform.Find("Visual");
+
+        CharacterControllerCompo = GetComponent<CharacterController>();
+        AnimatorCompo = _visualTrm.GetComponent<Animator>();
+        OnDead += OnDeadHandle;
     }
 
-    private void Update()
+    public override void Start()
     {
-        SetMovement();
+        base.Start();
     }
 
-    public void SetMovement()
+    public void OnDisable()
     {
-        Vector3 move = new Vector3(_inputReader.MovementVector.x, 0, _inputReader.MovementVector.z).normalized;
-        _characterController.Move(move * 5 * Time.deltaTime);
+        _stateMachine.CurrentState.ExitState();
+    }
+
+    public void SetVelocity(Vector3 dir)
+    {
+        CharacterControllerCompo.Move(dir);
+    }
+
+    public void Rotate(Vector3 dir, bool lerp = true)
+    {
+        var currentRotation = _visualTrm.rotation;
+        var destRotation = Quaternion.LookRotation(dir);
+
+        if (lerp)
+        {
+            _visualTrm.rotation = Quaternion.Lerp(currentRotation, destRotation, _rotateSpeed);
+        }
+        else
+        {
+            _visualTrm.rotation = destRotation;
+        }
+    }
+
+    public void StopImmediately()
+    {
+        CharacterControllerCompo.Move(Vector3.zero);
+    }
+
+    protected override void RegisterStates()
+    {
+        foreach (PlayerStateType stateType in Enum.GetValues(typeof(PlayerStateType)))
+        {
+            var typeName = $"Player{stateType.ToString()}State";
+            var type = Type.GetType(typeName);
+            var state = Activator.CreateInstance(type, _stateMachine, this, stateType) as PlayerState;
+            _stateMachine.RegisterState(stateType, state);
+        }
+    }
+
+    protected override void SetInitState()
+    {
+        _stateMachine.Initialize(this, PlayerStateType.Idle);
+    }
+
+
+    public override void OnDamage(DamageType type, float damage)
+    {
+        base.OnDamage(type, damage);
+        //SoundManager.Instance.PlaySFX("PlayerHit");
+    }
+
+    public void SetAnimationSpeed(float speed)
+    {
+        AnimatorCompo.speed = speed;
+    }
+
+    public void ResetAnimationSpeed()
+    {
+        AnimatorCompo.speed = 1f;
+    }
+
+    private void OnDeadHandle()
+    {
+        _stateMachine.CurrentState.ExitState();
     }
 }
