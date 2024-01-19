@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class State : IState
+public class State
 {
     protected StateMachine _stateMachine;
 

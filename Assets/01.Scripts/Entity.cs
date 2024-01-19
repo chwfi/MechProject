@@ -11,7 +11,9 @@ public abstract class Entity : MonoBehaviour, IDamageable
     //스탯 넣기
     protected StateMachine _stateMachine;
     public StateMachine StateMachine => _stateMachine;
-    
+
+    public float MoveSpeed; //임시 나중에 SO로 뺄 것
+
     [SerializeField] protected float _maxHP; //임시 나중에 Stat SO로 할 것
     public float CurrentHP { get; protected set; } //임시
     public bool IsDead => CurrentHP <= 0;
