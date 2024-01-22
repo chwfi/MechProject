@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRunState : PlayerState
+public class PlayerRunState : PlayerGroundedState
 {
     public PlayerRunState(StateMachine stateMachine, Entity owner, Enum type) : base(stateMachine, owner, type)
     {
@@ -12,13 +12,13 @@ public class PlayerRunState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-
-        _player.MoveSpeed = _player.RunSpeed;
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
+        _player.MoveSpeed = Mathf.Lerp(_player.MoveSpeed, _player.RunSpeed, Time.deltaTime * _player.LerpValue);
 
         if (!_player.InputReader.IsShiftPressed)
             _stateMachine.ChangeState(PlayerStateType.Idle);
@@ -27,7 +27,5 @@ public class PlayerRunState : PlayerState
     public override void ExitState()
     {
         base.ExitState();
-
-        _player.MoveSpeed = _player.RunSpeed;
     }
 }

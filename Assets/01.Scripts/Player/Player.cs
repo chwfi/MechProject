@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class Player : Entity
 {
-    [Range(0.1f, 1f)][SerializeField] private float _rotateSpeed;
+    [Range(0.1f, 1f)]
+    [SerializeField] private float _rotateSpeed;
+    [Range(0.1f, 2f)]
+    [SerializeField] private float _lerpValue;
+    public float LerpValue => _lerpValue;
 
     [SerializeField] private InputReader _inputReader;
     public InputReader InputReader => _inputReader;

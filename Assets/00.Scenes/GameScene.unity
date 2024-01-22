@@ -184,6 +184,7 @@ MonoBehaviour:
   RunSpeed: 4.5
   _maxHP: 100
   _rotateSpeed: 0.15
+  _lerpValue: 3
   _inputReader: {fileID: 11400000, guid: 31c5186f5fbb97449833dd34209bfa49, type: 2}
 --- !u!4 &169276170
 Transform:
