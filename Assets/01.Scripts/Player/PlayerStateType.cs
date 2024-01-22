@@ -1,5 +1,6 @@
 public enum PlayerStateType
 {
     Idle,
-    Walk
+    Walk,
+    Run
 }

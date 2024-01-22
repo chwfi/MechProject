@@ -12,7 +12,9 @@ public abstract class Entity : MonoBehaviour, IDamageable
     protected StateMachine _stateMachine;
     public StateMachine StateMachine => _stateMachine;
 
-    public float MoveSpeed; //임시 나중에 SO로 뺄 것
+    public float MoveSpeed;
+    public float WalkSpeed; //임시 나중에 SO로 뺄 것
+    public float RunSpeed; //이것도 임시
 
     [SerializeField] protected float _maxHP; //임시 나중에 Stat SO로 할 것
     public float CurrentHP { get; protected set; } //임시

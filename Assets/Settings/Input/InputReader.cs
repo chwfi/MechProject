@@ -12,6 +12,8 @@ public class InputReader : ScriptableObject, IPlayerActions
     public event Action OnShootingFireEvent;
     public event Action OnStopFireEvent;
 
+    public bool IsShiftPressed;
+
     public Vector3 MovementInput { get; private set; }
     public Vector2 AimPosition { get; private set; }
     private Controls _playerInputAction; 
@@ -36,5 +38,10 @@ public class InputReader : ScriptableObject, IPlayerActions
     public void OnAim(InputAction.CallbackContext context)
     {
         AimPosition = context.ReadValue<Vector2>();
+    }
+
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        IsShiftPressed = context.performed;
     }
 }

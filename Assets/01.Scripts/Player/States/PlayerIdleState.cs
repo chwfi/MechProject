@@ -12,6 +12,8 @@ public class PlayerIdleState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+
+        _player.MoveSpeed = _player.WalkSpeed;
     }
 
     public override void UpdateState()
@@ -19,7 +21,12 @@ public class PlayerIdleState : PlayerState
         var movementInput = _player.InputReader.MovementInput;
         if (movementInput.sqrMagnitude > 0.05f)
         {
-            _stateMachine.ChangeState(PlayerStateType.Walk);
+
+            if (_player.InputReader.IsShiftPressed)
+                _stateMachine.ChangeState(PlayerStateType.Run);
+            else
+                _stateMachine.ChangeState(PlayerStateType.Walk);
+
         }
     }
 

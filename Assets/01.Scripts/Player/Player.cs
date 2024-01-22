@@ -33,6 +33,7 @@ public class Player : Entity
         _stateMachine.CurrentState.ExitState();
     }
 
+    #region 움직임과 회전 관련
     public void SetVelocity(Vector3 dir)
     {
         CharacterControllerCompo.Move(dir);
@@ -57,6 +58,7 @@ public class Player : Entity
     {
         CharacterControllerCompo.Move(Vector3.zero);
     }
+    #endregion
 
     protected override void RegisterStates()
     {
