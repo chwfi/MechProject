@@ -20,7 +20,10 @@ public class PlayerIdleState : PlayerState
 
         if (movementInput.sqrMagnitude > 0.05f)
         {
-            _stateMachine.ChangeState(PlayerStateType.Walk);
+            if (_player.InputReader.IsShiftPressed)
+                _stateMachine.ChangeState(PlayerStateType.Run);
+            else
+                _stateMachine.ChangeState(PlayerStateType.Walk);
         }
     }
 
