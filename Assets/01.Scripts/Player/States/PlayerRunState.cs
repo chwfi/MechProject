@@ -10,13 +10,15 @@ public class PlayerRunState : PlayerGroundedState
     public override void EnterState()
     {
         base.EnterState();
+
+        _player.AnimatorController.SetRun(true);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        _player.MoveSpeed = Mathf.Lerp(_player.MoveSpeed, _player.RunSpeed, Time.deltaTime * _player.LerpValue);
+        _player.MoveSpeed = _player.RunSpeed;
 
         if (!_player.InputReader.IsShiftPressed)
             _stateMachine.ChangeState(PlayerStateType.Idle);
@@ -25,5 +27,7 @@ public class PlayerRunState : PlayerGroundedState
     public override void ExitState()
     {
         base.ExitState();
+
+        _player.AnimatorController.SetRun(false);
     }
 }

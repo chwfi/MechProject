@@ -29,6 +29,8 @@ public class PlayerGroundedState : PlayerState
 
         if (_player.InputReader.IsShiftPressed)
             _stateMachine.ChangeState(PlayerStateType.Run);
+
+        _player.AnimatorController.SetSpeed(_player.MoveSpeed);
     }
 
     public override void ExitState()

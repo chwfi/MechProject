@@ -12,6 +12,8 @@ public class Player : Entity
     [SerializeField] private InputReader _inputReader;
     public InputReader InputReader => _inputReader;
 
+    public PlayerAnimator AnimatorController { get; set; }
+
     private Transform _visualTrm;
 
     public override void Awake()
@@ -24,6 +26,8 @@ public class Player : Entity
 
         CharacterControllerCompo = GetComponent<CharacterController>();
         AnimatorCompo = _visualTrm.GetComponent<Animator>();
+        AnimatorController = _visualTrm.GetComponent<PlayerAnimator>();
+
         OnDead += OnDeadHandle;
     }
 

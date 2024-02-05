@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerWalkState : PlayerGroundedState
 {
@@ -10,17 +11,21 @@ public class PlayerWalkState : PlayerGroundedState
     public override void EnterState()
     {
         base.EnterState();
+
+        _player.AnimatorController.SetWalk(true);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
 
-        _player.MoveSpeed = Mathf.Lerp(_player.MoveSpeed, _player.WalkSpeed, Time.deltaTime * _player.LerpValue);
+        _player.MoveSpeed = _player.WalkSpeed;
     }
 
     public override void ExitState()
     {
         base.ExitState();
+
+        _player.AnimatorController.SetWalk(false);
     }
 }
