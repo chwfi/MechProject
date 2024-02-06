@@ -57,7 +57,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""WASD"",
+                    ""name"": ""Keys"",
                     ""id"": ""8bb2bda1-5512-4d65-bcce-472363116c22"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
