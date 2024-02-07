@@ -16,6 +16,9 @@ public class Player : Entity
 
     private Transform _visualTrm;
 
+    public int CurrentComboCounter = 0;
+    public bool CanAttack = true;
+
     public override void Awake()
     {
         _stateMachine = new StateMachine();
@@ -90,6 +93,8 @@ public class Player : Entity
         base.OnDamage(type, damage);
         //SoundManager.Instance.PlaySFX("PlayerHit");
     }
+
+    public void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 
     public void SetAnimationSpeed(float speed)
     {

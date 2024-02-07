@@ -7,10 +7,7 @@ using static Controls;
 public class InputReader : ScriptableObject, IPlayerActions
 {
     public event Action<Vector2> MovementEvent;
-
-    public event Action OnStartFireEvent;
-    public event Action OnShootingFireEvent;
-    public event Action OnStopFireEvent;
+    public event Action BasicAttackEvent;
 
     public bool IsShiftPressed;
 
@@ -43,5 +40,11 @@ public class InputReader : ScriptableObject, IPlayerActions
     public void OnRun(InputAction.CallbackContext context)
     {
         IsShiftPressed = context.performed;
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            BasicAttackEvent?.Invoke();
     }
 }

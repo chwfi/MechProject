@@ -12,6 +12,8 @@ public class PlayerGroundedState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+
+        _player.InputReader.BasicAttackEvent += AttackHandle;
     }
 
     public override void UpdateState()
@@ -31,6 +33,12 @@ public class PlayerGroundedState : PlayerState
             _stateMachine.ChangeState(PlayerStateType.Run);
 
         _player.AnimatorController.SetSpeed(_player.MoveSpeed);
+    }
+
+    public void AttackHandle()
+    {
+        if (_player.CanAttack)
+            _stateMachine.ChangeState(PlayerStateType.BasicAttack);
     }
 
     public override void ExitState()
