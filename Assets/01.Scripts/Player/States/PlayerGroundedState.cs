@@ -37,7 +37,7 @@ public class PlayerGroundedState : PlayerState
 
     public void AttackHandle()
     {
-        if (_player.CanAttack)
+        if (_player.CanAttack && _player.CurrentComboCounter < 3)
             _stateMachine.ChangeState(PlayerStateType.BasicAttack);
     }
 

@@ -12,7 +12,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     public bool IsShiftPressed;
 
     public Vector3 MovementInput { get; private set; }
-    public Vector2 AimPosition { get; private set; }
+    public Vector3 AimPosition { get; private set; }
     private Controls _playerInputAction; 
 
     private void OnEnable()

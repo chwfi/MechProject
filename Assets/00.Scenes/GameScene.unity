@@ -200,8 +200,12 @@ MonoBehaviour:
   RunSpeed: 9
   _maxHP: 100
   _rotateSpeed: 0.15
-  _lerpValue: 2
+  _dashTime: 0.25
+  _dashDelay: 0.15
+  _dashSpeed: 15
   _inputReader: {fileID: 11400000, guid: 31c5186f5fbb97449833dd34209bfa49, type: 2}
+  CurrentComboCounter: 0
+  CanAttack: 1
 --- !u!1001 &38160664
 PrefabInstance:
   m_ObjectHideFlags: 0

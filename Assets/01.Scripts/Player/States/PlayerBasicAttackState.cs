@@ -1,18 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.InputSystem;
 
 public class PlayerBasicAttackState : PlayerState
 {
-    private float _keyDelay = 0.35f;
-
-    private int _currentCombo = 1; //현재 콤보가 몇인지 
-    private bool _canAttack = true; // 선입력 막기 위해서 다음 공격가능상태인가
-    private float _keyTimer = 0; //다음공격이 이뤄지기까지 기다리는 시간
-    //이 시간내로 입력 안하면 idle로 돌아간다.
-    private float _attackStartTime;
+    private float _keyDelay = 0.99f;
+    private float _keyTimer = 0;
 
     public PlayerBasicAttackState(StateMachine stateMachine, Entity owner, Enum type) : base(stateMachine, owner, type)
     {
@@ -21,14 +14,16 @@ public class PlayerBasicAttackState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-
-        Debug.Log("어태");
-
         _player.AnimatorController.OnAnimationEndTrigger += OnAnimationEnd;
+
+        var dir = Quaternion.Euler(0, 45, 0) * _player.InputReader.MovementInput;
+        _player.Rotate(dir);
 
         _player.AnimatorController.SetAttackCount(_player.CurrentComboCounter);
         _player.AnimatorController.SetAttackTrigger();
         _player.CurrentComboCounter++;
+
+        _player.DashCoroutine(dir);
 
         _player.CanAttack = false;
     }
@@ -37,7 +32,7 @@ public class PlayerBasicAttackState : PlayerState
     {
         base.UpdateState();
 
-        if (_player.CanAttack && _keyTimer > 0)
+        if (_player.CanAttack && _keyTimer > 0) //시간이 다 되면 Idle로 되돌려놓는용도
         {
             _keyTimer -= Time.deltaTime;
             if (_keyTimer <= 0)
@@ -52,6 +47,12 @@ public class PlayerBasicAttackState : PlayerState
     private void OnAnimationEnd()
     {
         _player.CanAttack = true;
+
+        if (_player.CurrentComboCounter < 2)
+            _keyDelay = 0.5f;
+        else
+            _keyDelay = 0.99f;
+
         _keyTimer = _keyDelay; //0.5초 기다리기 시작
     }
 

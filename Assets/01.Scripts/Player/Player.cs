@@ -1,13 +1,17 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
     [Range(0.1f, 1f)]
     [SerializeField] private float _rotateSpeed;
-    [Range(0.1f, 2f)]
-    [SerializeField] private float _lerpValue;
-    public float LerpValue => _lerpValue;
+
+    [Header("Dash ฐüทร")]
+    [SerializeField] private float _dashTime;
+    [SerializeField] private float _dashDelay;
+    [SerializeField] private float _dashSpeed;
 
     [SerializeField] private InputReader _inputReader;
     public InputReader InputReader => _inputReader;
@@ -48,6 +52,26 @@ public class Player : Entity
     public void SetVelocity(Vector3 dir)
     {
         CharacterControllerCompo.Move(dir);
+    }
+
+    public void DashCoroutine(Vector3 dir)
+    {
+        StopCoroutine(Dash(dir));
+        StartCoroutine(Dash(dir));
+    }
+
+    private IEnumerator Dash(Vector3 dir)
+    {
+        yield return new WaitForSeconds(_dashDelay);
+
+        float startTime = Time.time;
+
+        while (Time.time < startTime + _dashTime)
+        {
+            CharacterControllerCompo.Move(dir * _dashSpeed * Time.deltaTime);
+
+            yield return null;
+        }
     }
 
     public void Rotate(Vector3 dir, bool lerp = true)
