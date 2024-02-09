@@ -4,9 +4,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerBasicAttackState : PlayerState
 {
-    private float _keyDelay = 0.99f;
-    private float _keyTimer = 0;
-
     public PlayerBasicAttackState(StateMachine stateMachine, Entity owner, Enum type) : base(stateMachine, owner, type)
     {
     }
@@ -14,10 +11,14 @@ public class PlayerBasicAttackState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        _player.AnimatorController.OnAnimationEndTrigger += OnAnimationEnd;
 
         var dir = Quaternion.Euler(0, 45, 0) * _player.InputReader.MovementInput;
         _player.Rotate(dir);
+
+        if (_player.CurrentComboCounter >= 2)
+            _player.AttackDelayTime = 1.25f;
+        else
+            _player.AttackDelayTime = 0.75f;
 
         _player.AnimatorController.SetAttackCount(_player.CurrentComboCounter);
         _player.AnimatorController.SetAttackTrigger();
@@ -32,10 +33,10 @@ public class PlayerBasicAttackState : PlayerState
     {
         base.UpdateState();
 
-        if (_player.CanAttack && _keyTimer > 0) //시간이 다 되면 Idle로 되돌려놓는용도
+        if (_player.CanAttack && _player.AttackTimer < _player.AttackDelayTime) 
         {
-            _keyTimer -= Time.deltaTime;
-            if (_keyTimer <= 0)
+            _player.AttackTimer += Time.deltaTime;
+            if (_player.AttackTimer >= _player.AttackDelayTime)
             {
                 _player.CurrentComboCounter = 0;
                 _player.AnimatorController.SetAttackCount(_player.CurrentComboCounter);
@@ -44,22 +45,8 @@ public class PlayerBasicAttackState : PlayerState
         }
     }
 
-    private void OnAnimationEnd()
-    {
-        _player.CanAttack = true;
-
-        if (_player.CurrentComboCounter < 2)
-            _keyDelay = 0.5f;
-        else
-            _keyDelay = 0.99f;
-
-        _keyTimer = _keyDelay; //0.5초 기다리기 시작
-    }
-
     public override void ExitState()
     {
-        _player.AnimatorController.OnAnimationEndTrigger -= OnAnimationEnd;
-
         base.ExitState();
     }
 }

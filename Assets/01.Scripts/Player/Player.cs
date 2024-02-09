@@ -8,6 +8,11 @@ public class Player : Entity
     [Range(0.1f, 1f)]
     [SerializeField] private float _rotateSpeed;
 
+    [Header("Attack 관련")]
+    [SerializeField] private float _attackDelayTime = 0.75f;
+    public float AttackDelayTime { get { return _attackDelayTime; } set { _attackDelayTime = value; } }
+    [HideInInspector] public float AttackTimer = 0;
+
     [Header("Dash 관련")]
     [SerializeField] private float _dashTime;
     [SerializeField] private float _dashDelay;

@@ -9,4 +9,29 @@ public class PlayerState : State
     {
 
     }
+
+    public override void EnterState()
+    {
+        base.EnterState();
+
+        _player.AnimatorController.OnAnimationEndTrigger += OnAnimationEnd;
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+
+        _player.AnimatorController.OnAnimationEndTrigger -= OnAnimationEnd;
+    }
+
+    private void OnAnimationEnd()
+    {
+        _player.CanAttack = true;
+        _player.AttackTimer = 0;
+    }
 }
