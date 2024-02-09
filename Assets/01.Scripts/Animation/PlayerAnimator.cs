@@ -25,11 +25,6 @@ public class PlayerAnimator : MonoBehaviour
         _player = transform.parent.GetComponent<Player>();
     }
 
-    public void AnimationFinishTrigger()
-    {
-        _player.AnimationFinishTrigger();
-    }
-
     public void OnAnimationEnd()
     {
         OnAnimationEndTrigger?.Invoke();

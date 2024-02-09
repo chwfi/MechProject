@@ -13,9 +13,9 @@ public class PlayerBasicAttackState : PlayerState
         base.EnterState();
 
         var dir = Quaternion.Euler(0, 45, 0) * _player.InputReader.MovementInput;
-        _player.Rotate(dir);
+        _player.Rotate(dir, false);
 
-        if (_player.CurrentComboCounter >= 2)
+        if (_player.CurrentComboCounter >= 2) //¸¶Áö¸· ÄŞº¸¸¸ µô·¹ÀÌ ´Ã·ÁÁÜ
             _player.AttackDelayTime = 1.25f;
         else
             _player.AttackDelayTime = 0.75f;
