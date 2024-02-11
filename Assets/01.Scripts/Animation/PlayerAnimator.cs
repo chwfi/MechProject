@@ -14,20 +14,16 @@ public class PlayerAnimator : MonoBehaviour
     private readonly int _attackCountHash = Animator.StringToHash("attack_count");
     private readonly int _attackHash = Animator.StringToHash("attack");
 
+    private readonly int _dashAttackHash = Animator.StringToHash("is_dashAttack");
+
     public event Action OnAnimationEndTrigger = null;
+    public event Action OnDashAttackEndTrigger = null;
 
     private Animator _animator;
-    private Player _player;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _player = transform.parent.GetComponent<Player>();
-    }
-
-    public void OnAnimationEnd()
-    {
-        OnAnimationEndTrigger?.Invoke();
     }
 
     public void SetSpeed(float value)
@@ -54,4 +50,21 @@ public class PlayerAnimator : MonoBehaviour
     {
         _animator.SetInteger(_attackCountHash, value);
     }
+
+    public void SetDashAttack(bool value)
+    {
+        _animator.SetBool(_dashAttackHash, value);
+    }
+
+    #region Animation End Logics
+    public void OnAnimationEnd()
+    {
+        OnAnimationEndTrigger?.Invoke();
+    }
+
+    public void DashAttackEnd()
+    {
+        OnDashAttackEndTrigger?.Invoke();
+    }
+    #endregion
 }

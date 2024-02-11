@@ -48,7 +48,12 @@ public class Player : Entity
         base.Start();
     }
 
-    public void OnDisable()
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
     {
         _stateMachine.CurrentState.ExitState();
     }

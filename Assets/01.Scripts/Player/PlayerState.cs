@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerState : State
+public class PlayerState : State //플레이어와 관련된 State들의 부모. 플레이어 State들의 공통되는 행동들을 관장한다.
 {
     protected Player _player => _owner as Player;
 
@@ -15,6 +15,7 @@ public class PlayerState : State
         base.EnterState();
 
         _player.AnimatorController.OnAnimationEndTrigger += OnAnimationEnd;
+        _player.InputReader.DashAttackEvent += OnDashAttack;
     }
 
     public override void UpdateState()
@@ -27,6 +28,17 @@ public class PlayerState : State
         base.ExitState();
 
         _player.AnimatorController.OnAnimationEndTrigger -= OnAnimationEnd;
+        _player.InputReader.DashAttackEvent -= OnDashAttack;
+    }
+
+    private void OnDashAttack()
+    {
+        Skill skill = SkillManager.Instance.GetSkill<DashAttackSkill>();
+
+        if (skill != null && skill.AttemptUseSkill() && _player.CanAttack)
+        {
+            _stateMachine.ChangeState(PlayerStateType.DashAttack);
+        }
     }
 
     private void OnAnimationEnd()

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization.Json;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static Controls;
@@ -8,6 +9,7 @@ public class InputReader : ScriptableObject, IPlayerActions
 {
     public event Action<Vector2> MovementEvent;
     public event Action BasicAttackEvent;
+    public event Action DashAttackEvent;
 
     public bool IsShiftPressed;
 
@@ -46,5 +48,11 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         if (context.performed)
             BasicAttackEvent?.Invoke();
+    }
+
+    public void OnDashAttack(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            DashAttackEvent?.Invoke();
     }
 }
