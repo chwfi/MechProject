@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -12,7 +9,7 @@ public class PlayerAnimator : MonoBehaviour
     private readonly int _runHash = Animator.StringToHash("is_run");
 
     private readonly int _attackCountHash = Animator.StringToHash("attack_count");
-    private readonly int _attackHash = Animator.StringToHash("attack");
+    private readonly int _attackHash = Animator.StringToHash("is_attack");
 
     private readonly int _dashAttackHash = Animator.StringToHash("is_dashAttack");
 
@@ -41,9 +38,9 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool(_runHash, value);
     }
 
-    public void SetAttackTrigger()
+    public void SetAttack(bool value)
     {
-        _animator.SetTrigger(_attackHash);
+        _animator.SetBool(_attackHash, value);
     }
 
     public void SetAttackCount(int value)

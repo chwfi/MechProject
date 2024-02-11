@@ -27,6 +27,7 @@ public class PlayerDashAttackState : PlayerState
     private void OnDashEnd()
     {
         _player.CanAttack = true;
+        _player.CurrentComboCounter = 0;
         _stateMachine.ChangeState(PlayerStateType.Idle);
     }
 
