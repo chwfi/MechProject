@@ -12,11 +12,22 @@ public class Player : Entity
     [SerializeField] private float _attackDelayTime = 0.75f;
     public float AttackDelayTime { get { return _attackDelayTime; } set { _attackDelayTime = value; } }
     [HideInInspector] public float AttackTimer = 0;
+    [SerializeField] private float _attackMoveTime;
+    public float AttackMoveTime => _attackMoveTime;
+    [SerializeField] private float _attackMoveDelay;
+    public float AttackMoveDelay => _attackMoveDelay;
+    [SerializeField] private float _attackMoveSpeed;
+    public float AttackMoveSpeed => _attackMoveSpeed;
+    public int CurrentComboCounter = 0;
+    public bool CanAttack = true;
 
     [Header("Dash ฐüทร")]
     [SerializeField] private float _dashTime;
+    public float DashTime => _dashTime;
     [SerializeField] private float _dashDelay;
+    public float DashDelay => _dashDelay;
     [SerializeField] private float _dashSpeed;
+    public float DashSpeed => _dashSpeed;
 
     [SerializeField] private InputReader _inputReader;
     public InputReader InputReader => _inputReader;
@@ -24,9 +35,6 @@ public class Player : Entity
     public PlayerAnimator AnimatorController { get; set; }
 
     private Transform _visualTrm;
-
-    public int CurrentComboCounter = 0;
-    public bool CanAttack = true;
 
     public override void Awake()
     {
@@ -64,21 +72,21 @@ public class Player : Entity
         CharacterControllerCompo.Move(dir);
     }
 
-    public void DashCoroutine(Vector3 dir)
+    public void Dash(Vector3 dir, float delay, float time, float speed)
     {
-        StopCoroutine(Dash(dir));
-        StartCoroutine(Dash(dir));
+        StopCoroutine(DashCoroutine(dir, delay, time, speed));
+        StartCoroutine(DashCoroutine(dir, delay, time, speed));
     }
 
-    private IEnumerator Dash(Vector3 dir)
+    private IEnumerator DashCoroutine(Vector3 dir, float delay, float time, float speed)
     {
-        yield return new WaitForSeconds(_dashDelay);
+        yield return new WaitForSeconds(delay);
 
         float startTime = Time.time;
 
-        while (Time.time < startTime + _dashTime)
+        while (Time.time < startTime + time)
         {
-            CharacterControllerCompo.Move(dir * _dashSpeed * Time.deltaTime);
+            CharacterControllerCompo.Move(dir * speed * Time.deltaTime);
 
             yield return null;
         }

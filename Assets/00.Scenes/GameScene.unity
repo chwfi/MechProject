@@ -202,12 +202,15 @@ MonoBehaviour:
   _rotateSpeed: 0.15
   _attackDelayTime: 0.75
   AttackTimer: 0
-  _dashTime: 0.2
+  _attackMoveTime: 0.2
+  _attackMoveDelay: 0.2
+  _attackMoveSpeed: 20
+  CurrentComboCounter: 0
+  CanAttack: 1
+  _dashTime: 0.35
   _dashDelay: 0.15
   _dashSpeed: 20
   _inputReader: {fileID: 11400000, guid: 31c5186f5fbb97449833dd34209bfa49, type: 2}
-  CurrentComboCounter: 0
-  CanAttack: 1
 --- !u!1001 &38160664
 PrefabInstance:
   m_ObjectHideFlags: 0

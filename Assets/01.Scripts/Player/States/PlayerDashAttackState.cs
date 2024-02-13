@@ -15,6 +15,10 @@ public class PlayerDashAttackState : PlayerState
 
         _player.AnimatorController.OnDashAttackEndTrigger += OnDashEnd;
 
+        Quaternion playerRotation = _player.AnimatorController.transform.rotation; //Visual의 회전값을가져온다
+        Vector3 forwardDirection = playerRotation * Vector3.forward;
+        _player.Dash(forwardDirection, _player.DashDelay, _player.DashTime, _player.DashSpeed);
+
         _player.AnimatorController.SetDashAttack(true);
         _player.CanAttack = false;
     }

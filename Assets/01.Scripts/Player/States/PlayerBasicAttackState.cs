@@ -12,8 +12,10 @@ public class PlayerBasicAttackState : PlayerState
     {
         base.EnterState();
 
-        var dir = Quaternion.Euler(0, 45, 0) * _player.InputReader.MovementInput;
-        _player.Rotate(dir, false);
+        Quaternion playerRotation = _player.AnimatorController.transform.rotation; //Visual의 회전값을가져온다
+        Vector3 forwardDirection = playerRotation * Vector3.forward;
+        _player.Dash(forwardDirection, _player.AttackMoveDelay, _player.AttackMoveTime, _player.AttackMoveSpeed);
+        _player.Rotate(forwardDirection, false);
 
         if (_player.CurrentComboCounter >= 2) //마지막 콤보만 딜레이 늘려줌
             _player.AttackDelayTime = 1.25f;
@@ -23,8 +25,6 @@ public class PlayerBasicAttackState : PlayerState
         _player.AnimatorController.SetAttackCount(_player.CurrentComboCounter);
         _player.AnimatorController.SetAttack(true);
         _player.CurrentComboCounter++;
-
-        _player.DashCoroutine(dir);
 
         _player.CanAttack = false;
     }
