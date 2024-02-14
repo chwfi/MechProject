@@ -209,7 +209,7 @@ MonoBehaviour:
   CanAttack: 1
   _dashTime: 0.35
   _dashDelay: 0.15
-  _dashSpeed: 20
+  _dashSpeed: 40
   _inputReader: {fileID: 11400000, guid: 31c5186f5fbb97449833dd34209bfa49, type: 2}
 --- !u!1001 &38160664
 PrefabInstance:
