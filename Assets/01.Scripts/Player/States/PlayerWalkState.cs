@@ -18,8 +18,6 @@ public class PlayerWalkState : PlayerGroundedState
     public override void UpdateState()
     {
         base.UpdateState();
-
-        _player.MoveSpeed = _player.WalkSpeed;
     }
 
     public override void ExitState()

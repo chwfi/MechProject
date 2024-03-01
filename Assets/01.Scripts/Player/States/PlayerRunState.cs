@@ -18,7 +18,7 @@ public class PlayerRunState : PlayerGroundedState
     {
         base.UpdateState();
 
-        _player.MoveSpeed = _player.RunSpeed;
+        //_player.MoveSpeed = _player.RunSpeed;
 
         if (!_player.InputReader.IsShiftPressed)
             _stateMachine.ChangeState(PlayerStateType.Idle);

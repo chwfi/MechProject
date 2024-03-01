@@ -190,7 +190,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Attack_3Combo_3
-  m_Speed: 1.1
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5388505273789038088}
@@ -275,7 +275,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Attack_3Combo_2
-  m_Speed: 1.25
+  m_Speed: 1.1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8597408009805555292}
@@ -762,13 +762,13 @@ AnimatorStateMachine:
     m_Position: {x: 270, y: 90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2954900217257302753}
-    m_Position: {x: 780, y: 230, z: 0}
+    m_Position: {x: 820, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8608620842378882501}
-    m_Position: {x: 530, y: 80, z: 0}
+    m_Position: {x: 590, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4192414768330684059}
-    m_Position: {x: 530, y: 150, z: 0}
+    m_Position: {x: 590, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1870166654553483605}
     m_Position: {x: 628.29333, y: 507.69144, z: 0}
@@ -1132,7 +1132,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Attack_3Combo_1
-  m_Speed: 1.25
+  m_Speed: 1.1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -7711128713997461445}

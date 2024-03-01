@@ -13,6 +13,7 @@ public class Player : Entity
 
     #region setting values
     [Header("이동 회전 관련")]
+    public float MoveSpeed;
     [Range(0.1f, 1f)]
     [SerializeField] private float _rotateSpeed;
 
@@ -43,7 +44,6 @@ public class Player : Entity
 
     #region components
     public PlayerAnimator AnimatorController { get; set; }
-
     private Transform _visualTrm;
     #endregion
 
@@ -51,20 +51,21 @@ public class Player : Entity
     {
         _stateMachine = new StateMachine();
         RegisterStates();
-        CurrentHP = _maxHP;
 
         _visualTrm = transform.Find("Visual");
 
         CharacterControllerCompo = GetComponent<CharacterController>();
-        AnimatorCompo = _visualTrm.GetComponent<Animator>();
+        HealthCompo = GetComponent<Health>();
         AnimatorController = _visualTrm.GetComponent<PlayerAnimator>();
-
-        OnDead += OnDeadHandle;
     }
 
     public override void Start()
     {
         base.Start();
+
+        MoveSpeed = _playerStat.moveSpeed.GetValue();
+
+        HealthCompo.SetHealth(_playerStat);
     }
 
     private void OnEnable()
@@ -140,27 +141,5 @@ public class Player : Entity
         _stateMachine.Initialize(this, PlayerStateType.Idle);
     }
 
-
-    public override void OnDamage(DamageType type, float damage)
-    {
-        base.OnDamage(type, damage);
-        //SoundManager.Instance.PlaySFX("PlayerHit");
-    }
-
     public void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
-
-    public void SetAnimationSpeed(float speed)
-    {
-        AnimatorCompo.speed = speed;
-    }
-
-    public void ResetAnimationSpeed()
-    {
-        AnimatorCompo.speed = 1f;
-    }
-
-    private void OnDeadHandle()
-    {
-        _stateMachine.CurrentState.ExitState();
-    }
 }

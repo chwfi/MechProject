@@ -11,5 +11,5 @@ public enum DamageType
 
 public interface IDamageable
 {
-    public void OnDamage(DamageType type, float damage);
+    public void OnDamage(DamageType type, int damage);
 }

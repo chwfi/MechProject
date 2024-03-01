@@ -19,12 +19,7 @@ public class PlayerIdleState : PlayerState
         var movementInput = _player.InputReader.MovementInput;
 
         if (movementInput.sqrMagnitude > 0.05f)
-        {
-            if (_player.InputReader.IsShiftPressed)
-                _stateMachine.ChangeState(PlayerStateType.Run);
-            else
-                _stateMachine.ChangeState(PlayerStateType.Walk);
-        }
+            _stateMachine.ChangeState(PlayerStateType.Walk);
     }
 
     public override void ExitState()

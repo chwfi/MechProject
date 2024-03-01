@@ -17,7 +17,7 @@ public class State
 
     public virtual void EnterState()
     {
-        _owner.AnimatorCompo.SetBool(_animToggleHash, true);
+
     }
 
     public virtual void UpdateState()
@@ -26,7 +26,7 @@ public class State
 
     public virtual void ExitState()
     {
-        _owner.AnimatorCompo.SetBool(_animToggleHash, false);
+
     }
 
     public virtual void AnimationFinishTrigger()
