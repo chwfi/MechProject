@@ -5,36 +5,47 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
+    [SerializeField] private InputReader _inputReader;
+    public InputReader InputReader => _inputReader;
+
+    [SerializeField] private PlayerStat _playerStat;
+    public PlayerStat PlayerStat => _playerStat;
+
+    #region setting values
+    [Header("이동 회전 관련")]
     [Range(0.1f, 1f)]
     [SerializeField] private float _rotateSpeed;
 
     [Header("Attack 관련")]
     [SerializeField] private float _attackDelayTime = 0.75f;
-    public float AttackDelayTime { get { return _attackDelayTime; } set { _attackDelayTime = value; } }
     [HideInInspector] public float AttackTimer = 0;
     [SerializeField] private float _attackMoveTime;
-    public float AttackMoveTime => _attackMoveTime;
     [SerializeField] private float _attackMoveDelay;
-    public float AttackMoveDelay => _attackMoveDelay;
     [SerializeField] private float _attackMoveSpeed;
-    public float AttackMoveSpeed => _attackMoveSpeed;
     public int CurrentComboCounter = 0;
     public bool CanAttack = true;
 
     [Header("Dash 관련")]
     [SerializeField] private float _dashTime;
-    public float DashTime => _dashTime;
     [SerializeField] private float _dashDelay;
-    public float DashDelay => _dashDelay;
     [SerializeField] private float _dashSpeed;
+    #endregion
+
+    #region property
+    public float AttackDelayTime { get { return _attackDelayTime; } set { _attackDelayTime = value; } }
+    public float AttackMoveTime => _attackMoveTime;
+    public float AttackMoveDelay => _attackMoveDelay;
+    public float AttackMoveSpeed => _attackMoveSpeed;
+    public float DashTime => _dashTime;
+    public float DashDelay => _dashDelay;
     public float DashSpeed => _dashSpeed;
+    #endregion
 
-    [SerializeField] private InputReader _inputReader;
-    public InputReader InputReader => _inputReader;
-
+    #region components
     public PlayerAnimator AnimatorController { get; set; }
 
     private Transform _visualTrm;
+    #endregion
 
     public override void Awake()
     {
