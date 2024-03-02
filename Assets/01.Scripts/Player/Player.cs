@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -44,6 +47,7 @@ public class Player : Entity
 
     #region components
     public PlayerAnimator AnimatorController { get; set; }
+    public List<FeedbackPlayer> PlayerFeedbacks { get; set; }
     private Transform _visualTrm;
     #endregion
 
@@ -57,6 +61,7 @@ public class Player : Entity
         CharacterControllerCompo = GetComponent<CharacterController>();
         HealthCompo = GetComponent<Health>();
         AnimatorController = _visualTrm.GetComponent<PlayerAnimator>();
+        PlayerFeedbacks = transform.Find("PlayerFeedbacks").GetComponentsInChildren<FeedbackPlayer>().ToList();
     }
 
     public override void Start()
@@ -124,6 +129,16 @@ public class Player : Entity
         CharacterControllerCompo.Move(Vector3.zero);
     }
     #endregion
+
+    public void PlayFeedback(string feedbackName)
+    {
+        FeedbackPlayer feedbacks = PlayerFeedbacks.Find(feedback => feedback.name == feedbackName);
+
+        if (feedbacks != null)
+        {
+            feedbacks.PlayFeedback();
+        }
+    }
 
     protected override void RegisterStates()
     {

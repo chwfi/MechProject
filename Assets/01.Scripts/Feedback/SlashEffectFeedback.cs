@@ -7,17 +7,17 @@ public class SlashEffectFeedback : Feedback
     [SerializeField] private EffectPlayer _effect;
     [SerializeField] private float _effectEndTime;
 
-    private Player _player => _owner as Player;
+    //private Player _player => _owner as Player;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
     }
 
     public override void CreateFeedback()
     {
-        EffectPlayer effect = PoolManager.Instance.Pop(_effect.ToString()) as EffectPlayer;
-        effect.transform.position = _player.transform.position;
+        EffectPlayer effect = PoolManager.Instance.Pop(_effect.name.ToString()) as EffectPlayer;
+        effect.transform.position = _owner.transform.position;
         effect.StartPlay(_effectEndTime);
     }
 

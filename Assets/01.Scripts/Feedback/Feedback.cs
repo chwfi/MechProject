@@ -6,7 +6,7 @@ public abstract class Feedback : MonoBehaviour
 {
     protected Entity _owner;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         _owner = GetComponentInParent<Entity>();
     }
