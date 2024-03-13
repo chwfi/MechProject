@@ -75,11 +75,12 @@ public class Player : Entity
 
     private void OnEnable()
     {
-        
+        AnimatorController.OnAnimationEndTrigger += () => PlayFeedback("SlashEffectFeedback");
     }
 
     private void OnDisable()
     {
+        AnimatorController.OnAnimationEndTrigger -= () => PlayFeedback("SlashEffectFeedback");
         _stateMachine.CurrentState.ExitState();
     }
 
