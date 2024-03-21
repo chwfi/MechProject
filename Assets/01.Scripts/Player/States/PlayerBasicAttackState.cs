@@ -12,7 +12,7 @@ public class PlayerBasicAttackState : PlayerState
     {
         base.EnterState();
 
-        //_player.PlayFeedback("SlashEffectFeedback");
+        _player.PlayerEffectManager.BladeEffect();
 
         Quaternion playerRotation = _player.AnimatorController.transform.rotation; //Visual의 회전값을가져온다
         Vector3 forwardDirection = playerRotation * Vector3.forward;

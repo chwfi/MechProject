@@ -13,7 +13,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private readonly int _dashAttackHash = Animator.StringToHash("is_dashAttack");
 
-    public event Action OnAnimationEndTrigger = null;
+    public event Action OnComboAttackEndTrigger = null;
     public event Action OnDashAttackEndTrigger = null;
 
     private Animator _animator;
@@ -54,9 +54,9 @@ public class PlayerAnimator : MonoBehaviour
     }
 
     #region Animation End Logics
-    public void OnAnimationEnd()
+    public void OnComboAttackEnd()
     {
-        OnAnimationEndTrigger?.Invoke();
+        OnComboAttackEndTrigger?.Invoke();
     }
 
     public void DashAttackEnd()

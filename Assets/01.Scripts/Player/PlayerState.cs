@@ -14,7 +14,7 @@ public class PlayerState : State //플레이어와 관련된 State들의 부모. 플레이어 St
     {
         base.EnterState();
 
-        _player.AnimatorController.OnAnimationEndTrigger += OnAnimationEnd;
+        _player.AnimatorController.OnComboAttackEndTrigger += OnAnimationEnd;
         _player.InputReader.DashAttackEvent += OnDashAttack;
     }
 
@@ -27,7 +27,7 @@ public class PlayerState : State //플레이어와 관련된 State들의 부모. 플레이어 St
     {
         base.ExitState();
 
-        _player.AnimatorController.OnAnimationEndTrigger -= OnAnimationEnd;
+        _player.AnimatorController.OnComboAttackEndTrigger -= OnAnimationEnd;
         _player.InputReader.DashAttackEvent -= OnDashAttack;
     }
 

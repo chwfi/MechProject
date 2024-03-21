@@ -26,6 +26,7 @@ public class Player : Entity
     [SerializeField] private float _attackMoveTime;
     [SerializeField] private float _attackMoveDelay;
     [SerializeField] private float _attackMoveSpeed;
+    public Transform salshEffectPos;
     public int CurrentComboCounter = 0;
     public bool CanAttack = true;
 
@@ -47,6 +48,7 @@ public class Player : Entity
 
     #region components
     public PlayerAnimator AnimatorController { get; set; }
+    public PlayerEffectManager PlayerEffectManager { get; set; }
     public List<FeedbackPlayer> PlayerFeedbacks { get; set; }
     private Transform _visualTrm;
     #endregion
@@ -61,7 +63,8 @@ public class Player : Entity
         CharacterControllerCompo = GetComponent<CharacterController>();
         HealthCompo = GetComponent<Health>();
         AnimatorController = _visualTrm.GetComponent<PlayerAnimator>();
-        PlayerFeedbacks = transform.Find("PlayerFeedbacks").GetComponentsInChildren<FeedbackPlayer>().ToList();
+        PlayerEffectManager = transform.Find("VFX").GetComponent<PlayerEffectManager>();
+        //PlayerFeedbacks = transform.Find("PlayerFeedbacks").GetComponentsInChildren<FeedbackPlayer>().ToList();
     }
 
     public override void Start()
@@ -73,14 +76,8 @@ public class Player : Entity
         HealthCompo.SetHealth(_playerStat);
     }
 
-    private void OnEnable()
-    {
-        AnimatorController.OnAnimationEndTrigger += () => PlayFeedback("SlashEffectFeedback");
-    }
-
     private void OnDisable()
     {
-        AnimatorController.OnAnimationEndTrigger -= () => PlayFeedback("SlashEffectFeedback");
         _stateMachine.CurrentState.ExitState();
     }
 

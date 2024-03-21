@@ -9,17 +9,14 @@ public class EffectPlayer : PoolableMono
     private List<ParticleSystem> _particles;
     public List<ParticleSystem> Particles => _particles;
 
-    public void StartPlay(float endTime)
+    public void StartPlay(float delayTime)
     {
-        if (_particles != null)
-            _particles.ForEach(p => p.Play());
+        float time;
 
-        StartCoroutine(Timer(endTime));
-    }
-
-    protected IEnumerator Timer(float timer)
-    {
-        yield return new WaitForSeconds(timer);
-        PoolManager.Instance.Push(this);
+        if (Time.time > delayTime)
+        {
+            if (_particles != null)
+                _particles.ForEach(p => p.Play());
+        }
     }
 }
