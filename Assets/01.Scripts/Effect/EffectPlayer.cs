@@ -11,12 +11,14 @@ public class EffectPlayer : PoolableMono
 
     public void StartPlay(float delayTime)
     {
-        float time;
+        StartCoroutine(Play(delayTime));
+    }
 
-        if (Time.time > delayTime)
-        {
-            if (_particles != null)
-                _particles.ForEach(p => p.Play());
-        }
+    private IEnumerator Play(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        if (_particles != null)
+            _particles.ForEach(p => p.Play());
     }
 }
